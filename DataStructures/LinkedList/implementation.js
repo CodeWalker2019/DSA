@@ -1,17 +1,50 @@
 class Node {
-    /**
-        Implement singly directed linked list Node class
-     */
+    #next = null;
+    #value;
+
+    constructor(value) {
+        this.#value = value;
+    }
+
+    get value() { return this.#value; }
+    set value(value) { this.#value = value; }
+
+    get next() { return this.#next; }
+    set next(next) { this.#next = next; }
 }
 
 class LinkedList {
+    #head = null;
+    #tail = null;
+    #length = 0;
+
+    constructor(value) {
+        if (!value) return;
+
+        this.#head = new Node(value);
+        this.#tail = this.#head;
+        this.#length = 1;
+    }
+
     /**
     * Adds an element to the end of the list.
     *
     * @param element element to add
     */
     add(element) {
-        throw new Error('Not implemented');
+        const node = new Node(element);
+
+        if (this.#length === 0) {
+            this.#tail = node;
+            this.#head = this.#tail;
+        } else {
+            this.#tail.next = node;
+            this.#tail = node;
+        }
+
+        this.#length++;
+
+        return true;
     }
 
     /**
@@ -22,7 +55,23 @@ class LinkedList {
      * @param element element to add
      */
     addByIndex(index, element) {
-        throw new Error('Not implemented');
+        if (index >= this.#length || index < 0) return false;
+
+        const node = new Node(element);
+
+        if (this.#length === 0) {
+            this.#head = node;
+            this.#tail = node;
+        } else {
+            const prevNode= this.get(index - 1);
+            const temp = prevNode.next;
+            node.next = temp;
+            prevNode.next = node;
+        }
+
+        this.#length++;
+
+        return true
     }
     
     /**
@@ -33,7 +82,20 @@ class LinkedList {
     * @param element a new element value
     */
     set(index, element) {
-        throw new Error('Not implemented'); 
+        if (index >= this.#length || index < 0) return false;
+
+        const node = this.get(index);
+        node.value = element;
+
+        return true;
+    }
+
+    *#iterate(node= this.#head, index = 0) {
+        while (node) {
+            yield [node, index];
+            node = node.next;
+            index += 1;
+        }
     }
     
     /**
@@ -44,7 +106,11 @@ class LinkedList {
     * @return an element value
     */
     get(index) {
-        throw new Error('Not implemented'); 
+        if (index >= this.#length || index < 0) return undefined;
+
+        for (const [node, i] of this.#iterate()) {
+            if (i === index) return node;
+        }
     }
     
     /**
@@ -52,18 +118,14 @@ class LinkedList {
     *
     * @return the first element of the list
     */
-    getFirst() {
-        throw new Error('Not implemented'); 
-    }
+    getFirst() { return this.#head; }
     
     /**
     * Returns the last element of the list. Operation is performed in constant time O(1)
     *
     * @return the last element of the list
     */
-    getLast() {
-        throw new Error('Not implemented'); 
-    }
+    getLast() { return this.#tail; }
     
     /**
     * Removes an elements by its position index. In case provided index in out of the list bounds it
@@ -73,7 +135,16 @@ class LinkedList {
     * @return deleted element
     */
     remove(index) {
-        throw new Error('Not implemented'); 
+        if (index >= this.#length || index < 0) return undefined;
+        if (index === this.#length - 1) this.getLast();
+        if (index === 0) this.getFirst();
+
+        const prevNode = this.get(index - 1);
+        const temp = prevNode.next;
+        prevNode.next = temp.next;
+        this.#length--;
+
+        return temp;
     }
     
     
@@ -83,7 +154,11 @@ class LinkedList {
     * @return true if element exist, false otherwise
     */
     contains(element) {
-        throw new Error('Not implemented'); 
+        for (const [node] of this.#iterate()) {
+            if (node.value === element) return true;
+        }
+
+        return false;
     }
     
     /**
@@ -91,24 +166,22 @@ class LinkedList {
     *
     * @return true if list is empty, false otherwise
     */
-    isEmpty() {
-        throw new Error('Not implemented'); 
-    }
+    isEmpty() { return this.#length === 0; }
     
     /**
     * Returns the number of elements in the list
     *
     * @return number of elements
     */
-    size() {
-        throw new Error('Not implemented');
-    }
+    size() { return this.#length; }
     
     /**
     * Removes all list elements
     */
     clear() {
-        throw new Error('Not implemented'); 
+        this.#length = 0;
+        this.#tail = null;
+        this.#head = null;
     }
 }
 
