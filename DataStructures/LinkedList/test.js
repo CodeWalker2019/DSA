@@ -4,11 +4,14 @@ const LinkedList = require("./implementation");
 (function testAdd() {
     let list = new LinkedList();
     list.add(10);
-    assert.strictEqual(list.get(0), 10);
+    const first = list.getFirst();
+    assert.strictEqual(first.value, 10);
     list.add(20);
-    assert.strictEqual(list.get(1), 20);
+    const second = first.next;
+    assert.strictEqual(second.value, 20);
     list.add(30);
-    assert.strictEqual(list.get(2), 30);
+    const third = second.next;
+    assert.strictEqual(third.value, 30);
     console.log('Test add passed!');
 })();
 
@@ -17,8 +20,8 @@ const LinkedList = require("./implementation");
     list.add(10);
     list.add(20);
     list.addByIndex(1, 15);
-    assert.strictEqual(list.get(1), 15);
-    assert.strictEqual(list.get(2), 20);
+    assert.strictEqual(list.get(1).value, 15);
+    assert.strictEqual(list.get(2).value, 20);
     console.log('Test add at index passed!');
 })();
 
@@ -27,7 +30,7 @@ const LinkedList = require("./implementation");
     list.add(10);
     list.add(20);
     list.set(1, 25);
-    assert.strictEqual(list.get(1), 25);
+    assert.strictEqual(list.get(1).value, 25);
     console.log('Test set passed!');
 })();
 
@@ -35,8 +38,8 @@ const LinkedList = require("./implementation");
     let list = new LinkedList();
     list.add(10);
     list.add(20);
-    assert.strictEqual(list.get(0), 10);
-    assert.strictEqual(list.get(1), 20);
+    assert.strictEqual(list.get(0).value, 10);
+    assert.strictEqual(list.get(1).value, 20);
     console.log('Test get passed!');
 })();
 
@@ -44,7 +47,7 @@ const LinkedList = require("./implementation");
     let list = new LinkedList();
     list.add(10);
     list.add(20);
-    assert.strictEqual(list.getFirst(), 10);
+    assert.strictEqual(list.getFirst().value, 10);
     console.log('Test get first passed!');
 })();
 
@@ -52,7 +55,7 @@ const LinkedList = require("./implementation");
     let list = new LinkedList();
     list.add(10);
     list.add(20);
-    assert.strictEqual(list.getLast(), 20);
+    assert.strictEqual(list.getLast().value, 20);
     console.log('Test get last passed!');
 })();
 
@@ -61,8 +64,8 @@ const LinkedList = require("./implementation");
     list.add(10);
     list.add(20);
     list.add(30);
-    assert.strictEqual(list.remove(1), 20);
-    assert.strictEqual(list.get(1), 30);
+    assert.strictEqual(list.remove(1).value, 20);
+    assert.strictEqual(list.get(1).value, 30);
     console.log('Test remove passed!');
 })();
 
