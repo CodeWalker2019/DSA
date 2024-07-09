@@ -16,7 +16,7 @@ const LinkedList = require("./implementation");
     let list = new LinkedList();
     list.add(10);
     list.add(20);
-    list.add(1, 15);
+    list.addByIndex(1, 15);
     assert.strictEqual(list.get(1), 15);
     assert.strictEqual(list.get(2), 20);
     console.log('Test add at index passed!');

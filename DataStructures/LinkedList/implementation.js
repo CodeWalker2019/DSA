@@ -21,7 +21,7 @@ class LinkedList {
      * @param index   an index of new element
      * @param element element to add
      */
-    add(index, element) {
+    addByIndex(index, element) {
         throw new Error('Not implemented');
     }
     
